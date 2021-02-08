@@ -2,7 +2,7 @@ import os
 import secrets
 import sys
 import threading
-import time
+import tim
 import datetime
 import re
 
