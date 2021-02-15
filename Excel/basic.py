@@ -5,7 +5,7 @@ import threading
 import time
 import datetime
 import re
-
+import ast
 import xlwings as xw
 import xlwings.utils as xwu
 
@@ -134,7 +134,7 @@ def reload():
                                                    str(maqlab.device_manufactorers[index]),
                                                    maqlab.device_types[index],
                                                    maqlab.device_commands[index]]
-
+        # res_liste = ast.literal_eval(stringA_liste)
         text_messagebox += "#" + str(maqlab.device_accessnumbers[index]) + "\t" + model \
                            + "\t" + maqlab.device_manufactorers[index] \
                            + "\t" + maqlab.device_types[index] + "\n"
@@ -263,7 +263,10 @@ def measure(t, count):
         wertzahl = re.sub("[A-Za-z ]", "", wertzahl)
 
         cell = (i + 16, 14)
-        sht.range(cell).value = wertzahl
+        if (":" in wertzahl):                   #weil Fehlermeldung enthält ':'
+            sht.range('N16').value = "Fehler"
+        else:
+            sht.range(cell).value = wertzahl
 
         # ----------------------------------------------------------------------
 
@@ -279,7 +282,10 @@ def measure(t, count):
         wertzahl = re.sub("[A-Za-z ]", "", wertzahl)
 
         cell = (i + 16, 15)  # COL O is 15
-        sht.range(cell).value = wertzahl
+        if (":" in wertzahl):                   #weil Fehlermeldung enthält ':'
+            sht.range('O16').value = "Fehler"
+        else:
+            sht.range(cell).value = wertzahl
 
         # ------------------------------------------------------------------------
 
@@ -295,7 +301,10 @@ def measure(t, count):
         wertzahl = re.sub("[A-Za-z ]", "", wertzahl)
 
         cell = (i + 16, 16)
-        sht.range(cell).value = wertzahl
+        if (":" in wertzahl):                   #weil Fehlermeldung enthält ':'
+            sht.range('P16').value = "Fehler"
+        else:
+            sht.range(cell).value = wertzahl
 
         # ------------------------------------------------------------------------
 
@@ -311,7 +320,10 @@ def measure(t, count):
         wertzahl = re.sub("[A-Za-z ]", "", wertzahl)
 
         cell = (i + 16, 17)
-        sht.range(cell).value = wertzahl
+        if(":" in wertzahl):                   #weil Fehlermeldung enthält ':'
+            sht.range('Q16').value = "Fehler"
+        else:
+            sht.range(cell).value = wertzahl
 
         # ------------------------------------------------------------------------
 

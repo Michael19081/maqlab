@@ -1,7 +1,7 @@
 import asyncio
 import datetime
 import paho.mqtt.client as paho
-import Extensions
+#import Extensions
 import secrets
 
 client = paho.Client()
@@ -44,6 +44,8 @@ def on_message(_client, _userdata, _msg):
         return
     # print(_msg.payload)
     q.put_nowait(_msg)
+
+    print(str(_msg.payload))
 
 
 async def mqttloop(_client):
