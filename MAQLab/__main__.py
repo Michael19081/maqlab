@@ -73,7 +73,7 @@ async def connector(event_config_readed):
     print(msg.payload)
     q.task_done()
 
-    # print(str(datetime.datetime.now()) + "  :" + "Requesting configuration files...")
+    # (str(datetime.datetime.now()) + "  :" + "Requesting configuration files...")
 
 
 # ------------------------------------------------------------------------------

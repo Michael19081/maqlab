@@ -240,12 +240,37 @@ def measure(t, count):
 
         global run_once
         if run_once:
+            countcomm = 0
             run_once = False
 
         # sht.range('E32').value = [['TabKopfX', 'TabKopfY'], [1, 2], [10, 20]]
 
         # sht.range('C22').value = 'Verfuegbar'
         # sht.range('C23').value = active_devices
+
+
+        commands = ['vdc?', 'idc?', 'vdc', 'idc', 'output']   # soll automatisch durch subscriben erfolgen
+
+        Eingabe = []
+        Ausgabe = []
+        commstr= ' '.join(commands)
+        commstr.split(" ")
+
+        try:
+            while 1:
+                if ("?" in commstr.split(" ")[countcomm]):
+                    Ausgabe.append(commstr.split(" ")[countcomm])
+
+                else:
+                    Eingabe.append(commstr.split(" ")[countcomm])
+
+                countcomm += 1
+
+        except:
+            pass
+
+        sht.range('H23').options(transpose=True).value = Ausgabe
+        sht.range('I23').options(transpose=True).value = Eingabe
 
 
         # ----------------------------------------------------------------------
@@ -327,6 +352,20 @@ def measure(t, count):
 
         # ------------------------------------------------------------------------
 
+        command = sht["X14"].value
+        value = sht["X16"].value
+        print("Sending " + command + " to " + str(accessnr))
+        wertzahl = maqlab.send_and_receive(accessnumber=accessnr, command=command, value=value).payload
+        print("Received " + wertzahl)
+
+
+        command = sht["Y14"].value
+        value = sht["Y16"].value
+        print("Sending " + command + " to " + str(accessnr))
+        wertzahl = maqlab.send_and_receive(accessnumber=accessnr, command=command, value=value).payload
+        print("Received " + wertzahl)
+
+        # ------------------------------------------------------------------------
 
         # timing
         timer = 0
