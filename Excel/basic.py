@@ -25,6 +25,7 @@ from MAQLab import MqttMsg
 from MAQLab import maqlab
 
 run_once = True
+Eingabezeit = True
 
 py_filename_without_extension = ""
 py_filename = ""
@@ -272,12 +273,33 @@ def measure(t, count):
         sht.range('H23').options(transpose=True).value = Ausgabe
         sht.range('I23').options(transpose=True).value = Eingabe
 
-
         # ----------------------------------------------------------------------
-
 
         accessnr = sht.range('N11').value
         accessnr = int(accessnr)
+
+        # ----------------------------------------------------------------------
+
+        command = sht["X14"].value
+        value = sht["X16"].value
+        print("Sending " + command + " to " + str(accessnr))
+        wertzahl = maqlab.send_and_receive(accessnumber=accessnr, command=command, value=value).payload
+        print("Received " + wertzahl)
+
+
+        command = sht["Y14"].value
+        value = sht["Y16"].value
+        print("Sending " + command + " to " + str(accessnr))
+        wertzahl = maqlab.send_and_receive(accessnumber=accessnr, command=command, value=value).payload
+        print("Received " + wertzahl)
+
+        global Eingabezeit
+        if Eingabezeit:         #1 sec warten,
+            time.sleep(1)
+            Eingabezeit = False
+            print("Eingabezeit warten")
+
+        # ------------------------------------------------------------------------
 
         command = str(sht["N14"].value)
         print("Sending " + command + " to " + str(accessnr))
@@ -295,9 +317,6 @@ def measure(t, count):
 
         # ----------------------------------------------------------------------
 
-        accessnr = sht.range('O11').value
-        accessnr = int(accessnr)
-
         command = str(sht["O14"].value)
         print("Sending " + command + " to " + str(accessnr))
         wertzahl = maqlab.send_and_receive(accessnumber=accessnr, command=command).payload
@@ -313,9 +332,6 @@ def measure(t, count):
             sht.range(cell).value = wertzahl
 
         # ------------------------------------------------------------------------
-
-        accessnr = sht.range('N11').value
-        accessnr = int(accessnr)
 
         command = str(sht["P14"].value)
         print("Sending " + command + " to " + str(accessnr))
@@ -352,20 +368,7 @@ def measure(t, count):
 
         # ------------------------------------------------------------------------
 
-        command = sht["X14"].value
-        value = sht["X16"].value
-        print("Sending " + command + " to " + str(accessnr))
-        wertzahl = maqlab.send_and_receive(accessnumber=accessnr, command=command, value=value).payload
-        print("Received " + wertzahl)
 
-
-        command = sht["Y14"].value
-        value = sht["Y16"].value
-        print("Sending " + command + " to " + str(accessnr))
-        wertzahl = maqlab.send_and_receive(accessnumber=accessnr, command=command, value=value).payload
-        print("Received " + wertzahl)
-
-        # ------------------------------------------------------------------------
 
         # timing
         timer = 0
