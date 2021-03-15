@@ -251,7 +251,8 @@ def measure(t, count):
 
 
         commands = ['vdc?', 'idc?', 'vdc', 'idc', 'output']   # soll automatisch durch subscriben erfolgen
-
+        devcommand = maqlab.device_commands
+        print(devcommand)
         Eingabe = []
         Ausgabe = []
         commstr= ' '.join(commands)
