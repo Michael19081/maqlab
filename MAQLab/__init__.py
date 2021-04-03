@@ -246,6 +246,7 @@ class MAQLab:
         except:
             value = ""
 
+        command = str(command)
         if msg is None:
             if not command.startswith("/"):
                 command = "/" + command

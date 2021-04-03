@@ -250,12 +250,21 @@ def measure(t, count):
         # sht.range('C23').value = active_devices
 
 
-        commands = ['vdc?', 'idc?', 'vdc', 'idc', 'output']   # soll automatisch durch subscriben erfolgen
-        devcommand = maqlab.device_commands
-        print(devcommand)
+        #commands = ['vdc?', 'idc?', 'vdc', 'idc', 'output']   # soll automatisch durch subscriben erfolgen
+        commands = []
+        commandsstr = sht["P9"].value
+        commands = ast.literal_eval(commandsstr)
+
+        #devcommand = maqlab.device_commands
+        #print(devcommand)
+
         Eingabe = []
         Ausgabe = []
         commstr= ' '.join(commands)
+        #commstr = commands
+        print(commstr)
+        print(commands)
+        #print(commands1)
         commstr.split(" ")
 
         try:
@@ -283,14 +292,14 @@ def measure(t, count):
 
         command = sht["X14"].value
         value = sht["X16"].value
-        print("Sending " + command + " to " + str(accessnr))
+        print("Sending " + str(command) + " to " + str(accessnr))
         wertzahl = maqlab.send_and_receive(accessnumber=accessnr, command=command, value=value).payload
         print("Received " + wertzahl)
 
 
         command = sht["Y14"].value
         value = sht["Y16"].value
-        print("Sending " + command + " to " + str(accessnr))
+        print("Sending " + str(command) + " to " + str(accessnr))
         wertzahl = maqlab.send_and_receive(accessnumber=accessnr, command=command, value=value).payload
         print("Received " + wertzahl)
 
